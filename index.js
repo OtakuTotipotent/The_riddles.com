@@ -11,7 +11,7 @@ const memes = [
 ];
 
 const jokes = [
-    'This statement',
+    'This statement!',
     'Eight bytes walk into a bar. The bartender asks, "Can I get you anything?" "Yeah," reply the bytes. "Make us a double".',
     'There are only 10 kinds of people in this world: those who know binary and those who do not',
     'All programmers are playwrights, and all computers are lousy actors.',
@@ -103,12 +103,21 @@ const data = {
     riddles,
 };
 
-let meme_flag = true;
-let joke_flag = true;
-let quote_flag = true;
-let riddle_flag = true;
-let riddle_ans_flag = true;
 
+// ? Document Objects linking
+
+let memes_flag = false;
+let jokes_flag = false;
+let quotes_flag = false;
+let riddles_flag = false;
+let riddle_ans_flag = false;
+
+let riddle_answer;
+
+const memesDiv = document.getElementById('memesDiv');
+const jokesDiv = document.getElementById('jokesDive');
+const quotesDiv = document.getElementById('quotesDiv');
+const riddlesDiv = document.getElementById('riddlesDiv');
 
 
 // ? user defined methods
@@ -117,45 +126,83 @@ function getRandomData(type) {
     return data[type][Math.floor(Math.random() * data[type].length)];
 }
 
-// ? Action on Button press
-
 function clearOutput() {
     try {
-        document.querySelector('#memesDiv img').remove();
-        document.querySelector('#jokesDive p').remove();
-        document.querySelector('#quotesDiv p').remove();
-        document.querySelectorAll('#riddlesDiv p').forEach(e => e.remove());
+        if (memes_flag) {
+            memesDiv.querySelector('img').remove();
+            memes_flag = false;
+        }
+        if (jokes_flag) {
+            jokesDiv.querySelector('p').remove();
+            jokes_flag = false;
+        }
+        if (quotes_flag) {
+            quotesDiv.querySelector('p').remove();
+            quotes_flag = false;
+        }
+        if (riddles_flag) {
+            riddlesDiv.querySelector('p').remove();
+            riddles_flag = false;
+        }
+        if (riddle_ans_flag) {
+            riddlesDiv.querySelector('p').remove();
+            riddle_ans_flag = false;
+        }
     } catch (error) {
         console.log('already cleared');
     }
 }
 function showMeme() {
     clearOutput();
-    const random_meme = getRandomData('memes');
-    let meme = document.createElement('img');
-    meme.setAttribute('src', random_meme);
-    meme.setAttribute('alt', 'a meme image')
-    document.querySelector('#memesDiv').append(meme);
+    const newImg = document.createElement('img');
+    newImg.src = getRandomData('memes');
+    newImg.alt = '_Memes.png';
+    memesDiv.append(newImg);
+    memes_flag = true;
+
 }
 
 function showJoke() {
     clearOutput();
-    const random_joke = getRandomData('jokes');
-    const joke = document.createElement('p');
-    joke.innerText = random_joke;
-    document.querySelector('#jokesDiv').appendChild(joke);
+    const newPara = document.createElement('p');
+    newPara.textContent = getRandomData('jokes');
+    jokesDiv.append(newPara);
+    jokes_flag = true;
 }
 
 function showQuote() {
-    const random_quote = getRandomData('quotes');
-    console.log(random_quote);
+    clearOutput();
+    const newPara = document.createElement('p');
+    const quoteObject = getRandomData('quotes');
+    newPara.innerHTML = `"${quoteObject['quote']}"<br>(${quoteObject['author']})`;
+    quotesDiv.append(newPara);
+    quotes_flag = true;
 }
 
 function showRiddle() {
-    const random_riddle = getRandomData('riddles');
-    console.log(random_riddle);
+    clearOutput();
+    const newPara = document.createElement('p');
+    const riddleObject = getRandomData('riddles');
+    riddle_answer = riddleObject['answer'];
+    newPara.textContent = riddleObject['question'];
+    riddlesDiv.append(newPara);
+    riddles_flag = true;
 }
 
 function revealAnswer() {
-    console.log(data);
+    if (riddles_flag) {
+        if (!riddle_ans_flag) {
+            const newPara = document.createElement('p');
+            newPara.textContent = riddle_answer;
+            newPara.setAttribute('id', 'riddle_answer');
+            riddlesDiv.append(newPara);
+            riddle_ans_flag = true;
+        }
+        else {
+            alert(riddle_answer);
+        }
+    }
+    else {
+        alert('Please get riddled first! 😊');
+    }
 }

@@ -30,6 +30,8 @@ h3 {
 
 p {
     letter-spacing: 0.2px;
+    font-size: 1.1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .user-interaction,
@@ -37,6 +39,10 @@ p {
     display: grid;
     gap: 2rem;
     padding: 2rem;
+}
+
+.website-interaction {
+    max-width: 50%;
 }
 
 .user-interaction {
@@ -66,14 +72,21 @@ p {
     border: none;
     text-decoration: underline dotted 2px;
     text-underline-offset: 6px;
-    color: lightblue;
-    font-size: 1.1rem;
 }
 
-img{
+#riddle_answer {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: Verdana, Tahoma, sans-serif;
+    color: lightblue;
+}
+
+img {
     margin-top: 6px;
-	border-radius: 5px;
-	border: 1px solid black;
-	max-width: 300px;
-	width: 100%;
+    border-radius: 5px;
+    border: 1px solid black;
+    max-width: 300px;
+    width: 100%;
 }
